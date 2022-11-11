@@ -1,0 +1,20 @@
+{
+  "name": "erikaax/simple-api",
+  "description": "Simple RESTfull API with PHP",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "SimpleAPI\\": "./"
+    }
+  },
+  "authors": [
+    {
+      "name": "Erika AX",
+      "email": "contact@erikaax.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
