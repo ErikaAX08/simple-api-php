@@ -10,7 +10,10 @@ class GETController
     public function __construct($request)
     {
         $this->request = $request;
-        $this->table = explode("?", $request)[0] !== "relations" ?? null;
+        $this->table =
+            explode("?", $request)[0] !== "relations"
+                ? explode("?", $request)[0]
+                : null;
         $this->select = $_GET["select"] ?? "*";
         $this->limit = $this->getLimit();
         $this->orderMode = $this->getOrder();
@@ -57,6 +60,10 @@ class GETController
 
     public function getRelations()
     {
+        if (!isset($_GET["rel"]) && !isset($_GET["type"])) {
+            return null;
+        }
+
         $relArray = $_GET["rel"];
         $relArray = explode(",", $relArray);
 
