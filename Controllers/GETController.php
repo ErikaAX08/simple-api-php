@@ -90,7 +90,7 @@ class GETController
     public function response()
     {
         $query = "SELECT $this->select FROM $this->table $this->relations $this->filters $this->orderMode $this->limit";
-        ResponseController::LogData(DBController::query($query));
+        echo ResponseController::LogData(DBController::query($query));
     }
 }
 
