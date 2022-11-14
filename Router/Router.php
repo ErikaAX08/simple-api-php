@@ -21,7 +21,7 @@ class Router
                 call_user_func([$controller, "response"]);
             } else {
                 echo ResponseController::LogError(
-                    "HTTPS method does not exist"
+                    501,"The request method is not supported by the server and cannot be handled"
                 );
             }
         }
