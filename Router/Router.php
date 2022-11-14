@@ -11,7 +11,7 @@ class Router
         $routes = explode("/", $_SERVER["REQUEST_URI"]);
         $routes = array_filter($routes);
         if (count($routes) === 0) {
-            ResponseController::LogError(400, "Malformed request syntax");
+            echo ResponseController::LogError(400, "Malformed request syntax");
         } else {
             $controller = $_SERVER["REQUEST_METHOD"] . "Controller";
             $controller = "SimpleAPI\Controllers\\$controller";
