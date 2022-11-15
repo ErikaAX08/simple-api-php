@@ -1,7 +1,9 @@
 <?php
 
 namespace SimpleAPI\Database;
+
 use PDO;
+use PDOException;
 
 class DBController
 {
@@ -29,5 +31,3 @@ class DBController
         return $stmt->fetchAll(PDO::FETCH_CLASS);
     }
 }
-
-?>
