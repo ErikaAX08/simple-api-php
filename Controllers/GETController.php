@@ -93,5 +93,3 @@ class GETController
         echo ResponseController::LogData(DBController::query($query));
     }
 }
-
-?>

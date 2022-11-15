@@ -17,5 +17,3 @@ $dotenv->load();
 
 $router = new Router();
 $router->run();
-
-?>

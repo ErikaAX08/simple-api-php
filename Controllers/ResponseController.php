@@ -8,7 +8,7 @@ class ResponseController
     {
         $response = [
             "status" => $status,
-            "error" =>  $error,
+            "error" => $error,
             "data" => "null",
         ];
 
