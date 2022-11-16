@@ -82,9 +82,10 @@ class POSTController
                             )[1],
                         ];
                         // Here update the token data at user
-                        $this->response = ResponseController::LogData([
-                            "The process was successful",
-                        ]);
+
+
+
+                        // $this->response = ResponseController::LogData();
                         return true;
                     } else {
                         $this->response = ResponseController::LogError(
@@ -124,7 +125,7 @@ class POSTController
                 } else {
                     $this->response = ResponseController::LogError(
                         404,
-                        "Error: The token has expired"
+                        "The token has expired"
                     );
                     return false;
                 }
@@ -136,6 +137,10 @@ class POSTController
                 return false;
             }
         } else {
+            $this->response = ResponseController::LogError(
+                404,
+                "The user is not authorized"
+            );
             return false;
         }
     }
@@ -144,7 +149,6 @@ class POSTController
     {
         if (
             $this->columns &&
-            $this->token &&
             isset($_GET["register"]) &&
             $_GET["register"] === "true"
         ) {
@@ -156,9 +160,14 @@ class POSTController
                 $data = $_POST;
                 $data["password_user"] = $crypt;
 
+                $this->postData($data);
+
                 $this->response = ResponseController::LogData(
-                    $this->postData($data)
+                    "The user was registered successfully",
+                    "null"
                 );
+
+                return true;
             } else {
                 $this->response = ResponseController::LogError(
                     404,
@@ -177,8 +186,8 @@ class POSTController
         $params = "(";
 
         foreach ($data as $key => $value) {
-            $columns .= $key . ",";
-            $params .= $value . ",";
+            $columns .= "$key,";
+            $params .= "'$value',";
         }
 
         $columns = substr($columns, 0, -1);
@@ -188,7 +197,6 @@ class POSTController
         $params .= ")";
 
         $query = "INSERT INTO $this->table $columns VALUES $params";
-        echo $query;
 
         return DBController::query($query);
     }
