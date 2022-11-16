@@ -75,17 +75,14 @@ class POSTController
                             "id" => $query[0]->id_user,
                             "email" => $query[0]->email_user,
                         ];
-                        $data = [
-                            "token_user" => JWTController::Token($dataToken)[0],
-                            "token_exp_user" => JWTController::Token(
-                                $dataToken
-                            )[1],
-                        ];
-                        // Here update the token data at user
 
+                        $jwt = JWTController::Token($dataToken);
+                        $set = "token_user = '$jwt[0]', token_exp_user = '$jwt[1]'";
+                        $id = $query[0]->id_user;
+                        $update = "UPDATE $this->table SET $set WHERE id_user = $id";
+                        DBController::query($update);
 
-
-                        // $this->response = ResponseController::LogData();
+                        $this->response = ResponseController::LogData("Login successfully", "null");
                         return true;
                     } else {
                         $this->response = ResponseController::LogError(
@@ -112,7 +109,7 @@ class POSTController
 
     public function getToken()
     {
-        if ($this->columns && isset($_GET["token"])) {
+        if ($this->columns && $this->login === false && isset($_GET["token"])) {
             $token = $_GET["token"];
             $user = "SELECT token_user,token_exp_user FROM users WHERE token_user = '$token'";
             $user = DBController::query($user);
@@ -137,10 +134,6 @@ class POSTController
                 return false;
             }
         } else {
-            $this->response = ResponseController::LogError(
-                404,
-                "The user is not authorized"
-            );
             return false;
         }
     }
