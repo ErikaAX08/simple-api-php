@@ -76,11 +76,8 @@ class POSTController
                             "email" => $query[0]->email_user,
                         ];
 
-                        $jwt = JWTController::Token($dataToken);
-                        $set = "token_user = '$jwt[0]', token_exp_user = '$jwt[1]'";
-                        $id = $query[0]->id_user;
-                        $update = "UPDATE $this->table SET $set WHERE id_user = $id";
-                        DBController::query($update);
+                        $jwt = JWTController::CreateToken($dataToken);
+                        JWTController::UpdateToken($jwt, $query[0]->id_user);
 
                         $this->response = ResponseController::LogData("Login successfully", "null");
                         return true;
@@ -109,23 +106,12 @@ class POSTController
 
     public function getToken()
     {
-        if ($this->columns && $this->login === false && isset($_GET["token"])) {
-            $token = $_GET["token"];
-            $user = "SELECT token_user,token_exp_user FROM users WHERE token_user = '$token'";
-            $user = DBController::query($user);
+        if ($this->columns && $this->login === false && isset(apache_request_headers()["Authorization"])) {
+            $token = apache_request_headers()["Authorization"];
+            $token = JWTController::CheckToken($token);
 
-            if (!empty($user)) {
-                $time = time();
-
-                if ($user[0]->token_exp_user > $time) {
-                    return true;
-                } else {
-                    $this->response = ResponseController::LogError(
-                        404,
-                        "The token has expired"
-                    );
-                    return false;
-                }
+            if ($token) {
+                return true;
             } else {
                 $this->response = ResponseController::LogError(
                     404,
