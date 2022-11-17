@@ -15,11 +15,12 @@ class ResponseController
         return json_encode($response, http_response_code($status));
     }
 
-    public static function LogData(array $data)
+    public static function LogData(string $message, array|string $data)
     {
         $response = [
             "status" => 200,
             "error" => "null",
+            "message" => $message,
             "data" => $data,
         ];
 
