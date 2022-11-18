@@ -26,7 +26,10 @@ class DELETEController
 
             DBController::query($query);
 
-            $this->response = ResponseController::LogData("The data was deleted successfully", "null");
+            $this->response = ResponseController::LogData(
+                "The data was deleted successfully",
+                "null"
+            );
         }
 
         echo $this->response;
@@ -57,9 +60,7 @@ class DELETEController
 
     public function getToken()
     {
-        if (
-            isset(apache_request_headers()["Authorization"])
-        ) {
+        if (isset(apache_request_headers()["Authorization"])) {
             $token = apache_request_headers()["Authorization"];
             $token = JWTController::CheckToken($token);
 
