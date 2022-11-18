@@ -197,9 +197,11 @@ class POSTController
             $this->login === false &&
             $this->token === true
         ) {
-            // $this->response = ResponseController::LogData(
-            //     $this->postData($data)
-            // );
+            $this->postData($_POST);
+            $this->response = ResponseController::LogData(
+                "Data uploaded successfully",
+                "null"
+            );
         }
         echo $this->response;
     }
