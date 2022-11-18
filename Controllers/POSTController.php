@@ -126,6 +126,10 @@ class POSTController
                 return false;
             }
         } else {
+            $this->response = ResponseController::LogError(
+                404,
+                "The user is not authorized"
+            );
             return false;
         }
     }
