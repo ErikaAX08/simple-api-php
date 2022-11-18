@@ -144,7 +144,10 @@ class PUTController
 
             $data = DBController::query($query);
 
-            return ResponseController::LogData("The data was updated successfully", $data);
+            return ResponseController::LogData(
+                "The data was updated successfully",
+                $data
+            );
         } else {
             return ResponseController::LogError(404, "Something was wrong");
         }

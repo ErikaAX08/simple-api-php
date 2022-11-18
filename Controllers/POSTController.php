@@ -79,7 +79,10 @@ class POSTController
                         $jwt = JWTController::CreateToken($dataToken);
                         JWTController::UpdateToken($jwt, $query[0]->id_user);
 
-                        $this->response = ResponseController::LogData("Login successfully", "null");
+                        $this->response = ResponseController::LogData(
+                            "Login successfully",
+                            "null"
+                        );
                         return true;
                     } else {
                         $this->response = ResponseController::LogError(
@@ -106,7 +109,10 @@ class POSTController
 
     public function getToken()
     {
-        if ($this->columns && $this->login === false && isset(apache_request_headers()["Authorization"])) {
+        if (
+            $this->columns &&
+            isset(apache_request_headers()["Authorization"])
+        ) {
             $token = apache_request_headers()["Authorization"];
             $token = JWTController::CheckToken($token);
 

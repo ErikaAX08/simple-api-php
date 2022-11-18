@@ -12,8 +12,8 @@ class GETController
         $this->request = $request;
         $this->table =
             explode("?", $request)[0] !== "relations"
-            ? explode("?", $request)[0]
-            : null;
+                ? explode("?", $request)[0]
+                : null;
         $this->select = $_GET["select"] ?? "*";
         $this->limit = $this->getLimit();
         $this->orderMode = $this->getOrder();
@@ -90,6 +90,9 @@ class GETController
     public function response()
     {
         $query = "SELECT $this->select FROM $this->table $this->relations $this->filters $this->orderMode $this->limit";
-        echo ResponseController::LogData("The process was successful", DBController::query($query));
+        echo ResponseController::LogData(
+            "The process was successful",
+            DBController::query($query)
+        );
     }
 }
